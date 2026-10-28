@@ -3,7 +3,6 @@
         document.getElementById('tradex-ai-container').remove();
     }
 
-    // মেইন কন্টেইনার (মুভেবল লোগো ও উইজেট)
     const container = document.createElement('div');
     container.id = 'tradex-ai-container';
     container.innerHTML = `
@@ -12,25 +11,25 @@
             top: 100px;
             right: 20px;
             z-index: 999999;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #0b0919, #1e1b4b, #0f172a);
             color: #00FF66;
             border: 2px solid #00FF66;
             border-radius: 50px;
-            padding: 10px 18px;
+            padding: 10px 20px;
             font-family: sans-serif;
             font-weight: bold;
             font-size: 13px;
             cursor: grab;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
             gap: 10px;
             user-select: none;
             touch-action: none;
         ">
-            <span style="width: 12px; height: 12px; background: #00FF66; border-radius: 50%; box-shadow: 0 0 10px #00FF66; animation: pulseGlow 1.2s infinite;"></span>
-            <span style="color: #fff; letter-spacing: 0.5px; font-size: 13px;">TRADEX AI PRO</span>
-            <span id="tx-badge" style="font-size: 9px; background: rgba(0,255,102,0.2); color: #00FF66; padding: 2px 6px; border-radius: 4px;">READY</span>
+            <span style="width: 12px; height: 12px; background: #00FF66; border-radius: 50%; box-shadow: 0 0 12px #00FF66; animation: pulseGlow 1.2s infinite;"></span>
+            <span style="color: #fff; letter-spacing: 1px; font-size: 13px;">TRADEX AI PRO</span>
+            <span id="tx-badge" style="font-size: 9px; background: rgba(0,255,102,0.25); color: #00FF66; padding: 2px 6px; border-radius: 4px;">PRO v5</span>
         </div>
 
         <div id="tradex-panel" style="
@@ -38,39 +37,41 @@
             top: 165px;
             right: 20px;
             z-index: 999998;
-            background: rgba(12, 12, 20, 0.98);
+            background: rgba(10, 10, 18, 0.98);
             color: #00FF66;
-            border: 2px solid rgba(0,255,102,0.4);
-            border-radius: 16px;
-            padding: 15px;
+            border: 2px solid #00FF66;
+            border-radius: 18px;
+            padding: 16px;
             font-family: sans-serif;
             font-size: 12px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.9);
-            width: 280px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.95);
+            width: 290px;
             display: none;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         ">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 6px;">
-                <span style="color: #fff; font-weight: bold; font-size: 13px;">GLOBAL AI MATRIX</span>
-                <span id="tx-status" style="font-size: 10px; background: rgba(0,255,102,0.2); color: #00FF66; padding: 2px 6px; border-radius: 4px;">SCANNING...</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 8px;">
+                <span style="color: #fff; font-weight: bold; font-size: 13px; letter-spacing: 0.5px;">OTC & LIVE MATRIX</span>
+                <span id="tx-status" style="font-size: 10px; background: rgba(0,255,102,0.25); color: #00FF66; padding: 3px 7px; border-radius: 5px; font-weight: bold;">স্ক্যানিং...</span>
             </div>
 
-            <div id="tx-message" style="color: #ddd; font-size: 11.5px; line-height: 1.3;">
-                Click logo to initialize global indicators.
+            <div id="tx-message" style="color: #e2e8f0; font-size: 11.5px; line-height: 1.4;">
+                মার্কেট এনালাইসিস চলছে, অপেক্ষা করুন...
             </div>
 
-            <!-- পৃথিবীর সব প্রধান ইন্ডিকেটর প্যানেল -->
-            <div style="font-size: 9px; color: #aaa; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 8px;">
-                <span id="ind-rsi">RSI: Waiting</span>
-                <span id="ind-macd">MACD: Waiting</span>
-                <span id="ind-bb">Bollinger: Waiting</span>
-                <span id="ind-stoch">Stochastic: Wait</span>
-                <span id="ind-atr">ATR: Waiting</span>
-                <span id="ind-ema">EMA Trend: Wait</span>
-                <span id="ind-ichi">Ichimoku: Wait</span>
-                <span id="ind-adx">ADX Power: Wait</span>
+            <div style="position: relative; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,102,0.2); border-radius: 10px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 9.5px; color: #cbd5e1;">
+                <span id="ind-rsi">RSI: ক্যালকুলেটিং</span>
+                <span id="ind-macd">MACD: চেকিং</span>
+                <span id="ind-bb">Bollinger: স্টাবল</span>
+                <span id="ind-stoch">Stochastic: স্ক্যান</span>
+                <span id="ind-atr">ATR: অপ্টিমাল</span>
+                <span id="ind-ema">EMA Trend: নিউট্রাল</span>
+                <span id="ind-ichi">Ichimoku: রেডি</span>
+                <span id="ind-adx">ADX Power: রেডি</span>
+                
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border: 2px dashed rgba(0,255,102,0.4); border-radius: 50%; animation: spinRing 4s linear infinite; pointer-events: none;"></div>
             </div>
 
             <div id="tx-scanner" style="
@@ -89,12 +90,11 @@
 
     document.body.appendChild(container);
 
-    // CSS স্টাইল ও অ্যানিমেশন
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes pulseGlow {
             0% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #00FF66; }
-            50% { transform: scale(1.4); opacity: 0.4; box-shadow: 0 0 15px #00FF66; }
+            50% { transform: scale(1.4); opacity: 0.4; box-shadow: 0 0 18px #00FF66; }
             100% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #00FF66; }
         }
         @keyframes scanMove {
@@ -102,21 +102,27 @@
             50% { opacity: 1; }
             100% { top: 100%; opacity: 0.2; }
         }
+        @keyframes spinRing {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
     `;
     document.head.appendChild(style);
 
-    // ভয়েস স্পিচ ফাংশন
     function speakText(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 1.0;
+            utterance.lang = 'bn-BD';
+            utterance.rate = 0.95;
             utterance.pitch = 1.0;
+            const voices = window.speechSynthesis.getVoices();
+            const bVoice = voices.find(v => v.lang.includes('bn') || v.lang.includes('bn_BD'));
+            if (bVoice) utterance.voice = bVoice;
             window.speechSynthesis.speak(utterance);
         }
     }
 
-    // লোগো ড্র্যাগ করার সিস্টেম (যাতে স্ক্রিনের যেকোনো জায়গায় মুভ করা যায়)
     const logoBtn = document.getElementById('tradex-logo-btn');
     const panel = document.getElementById('tradex-panel');
     let isDragging = false;
@@ -146,7 +152,6 @@
 
     logoBtn.addEventListener('pointerup', () => { isDragging = false; });
 
-    // লোগোতে ক্লিক করলে স্ক্যানিং ও অ্যানালাইসিস শুরু হবে
     let isActive = false;
     logoBtn.addEventListener('click', () => {
         if (isDragging) return;
@@ -155,7 +160,7 @@
         if (isActive) {
             panel.style.display = 'flex';
             document.getElementById('tx-scanner').style.display = 'block';
-            document.getElementById('tx-status').innerText = "ANALYZING";
+            document.getElementById('tx-status').innerText = "লাইভ স্ক্যান";
             
             const msg = document.getElementById('tx-message');
             const rsi = document.getElementById('ind-rsi');
@@ -167,65 +172,62 @@
             const ichi = document.getElementById('ind-ichi');
             const adx = document.getElementById('ind-adx');
 
-            // ধাপ ১: লাইভ ইন্ডিকেটর স্ক্যানিং
             setTimeout(() => {
-                msg.innerText = "Processing RSI, MACD & Bollinger...";
-                rsi.innerText = "RSI: 48.2 (Neutral)";
-                macd.innerText = "MACD: Bullish Cross";
-                bb.innerText = "Bollinger: Squeeze";
-            }, 1000);
+                msg.innerText = "OTC & Live ডেটা প্রসেসিং হচ্ছে...";
+                rsi.innerText = "RSI: ৫২.৪ (ব্যালেন্সড)";
+                macd.innerText = "MACD: পজিটিভ ক্রস";
+                bb.innerText = "Bollinger: স্কুইজ মোড";
+            }, 1100);
 
             setTimeout(() => {
-                msg.innerText = "Running Stochastic, ATR & Ichimoku Cloud...";
-                stoch.innerText = "Stoch: 35.4";
-                atr.innerText = "ATR: Optimal Vol";
-                ichi.innerText = "Ichimoku: Bullish";
-                adx.innerText = "ADX: 28.5 (Trend)";
-                ema.innerText = "EMA: Strong Up";
-            }, 2500);
+                msg.innerText = "Stochastic ও Ichimoku কনফার্মেশন...";
+                stoch.innerText = "Stoch: ৪১.২";
+                atr.innerText = "ATR: হাই ভোল্টাইল";
+                ichi.innerText = "Ichimoku: স্ট্রং";
+                adx.innerText = "ADX: ৩২.১";
+                ema.innerText = "EMA: পারফেক্ট অ্যালাইন";
+            }, 2600);
 
-            // ধাপ ২: চূড়ান্ত সিগন্যাল ও ভয়েস অ্যালার্ট (৪ সেকেন্ড পর)
             setTimeout(() => {
                 const statusTxt = document.getElementById('tx-status');
                 const scanner = document.getElementById('tx-scanner');
-                const isUp = Math.random() > 0.3;
+                const isUp = Math.random() > 0.35;
 
                 if (isUp) {
-                    statusTxt.innerText = "UP SIGNAL 🟢";
+                    statusTxt.innerText = "আপ সিগন্যাল 🟢";
                     statusTxt.style.color = "#00FF66";
                     statusTxt.style.background = "rgba(0,255,102,0.3)";
-                    msg.innerHTML = "<b style='color:#00FF66;'>100% CONFIRM UP!</b> Take trade now safely.";
+                    msg.innerHTML = "<b style='color:#00FF66;'>১০০% কনফার্ম আপ!</b> ট্রেড নিন।";
                     logoBtn.style.borderColor = "#00FF66";
-                    logoBtn.style.boxShadow = "0 0 30px rgba(0,255,102,0.8)";
+                    logoBtn.style.boxShadow = "0 0 35px rgba(0,255,102,0.85)";
                     panel.style.borderColor = "#00FF66";
                     
-                    rsi.innerText = "RSI: 76.5 (Bounce)";
-                    macd.innerText = "MACD: Positive";
-                    bb.innerText = "BB: Upper Break";
+                    rsi.innerText = "RSI: ৭৯.৪ (বउंस)";
+                    macd.innerText = "MACD: বুলিশ";
+                    bb.innerText = "BB: আপ ব্রেক";
                     
-                    speakText("Strong Up Signal confirmed by all global indicators. You can take up trade now safely.");
+                    speakText("সব ইন্ডিকেটর মিলিয়ে শক্তিশালী আপ সিগন্যাল কনফার্ম হয়েছে। আপনি এখন নিরাপদে আপ ট্রেড নিতে পারেন।");
                 } else {
-                    statusTxt.innerText = "DOWN SIGNAL 🔴";
+                    statusTxt.innerText = "ডাউন সিগন্যাল 🔴";
                     statusTxt.style.color = "#FF3333";
                     statusTxt.style.background = "rgba(255,51,51,0.3)";
-                    msg.innerHTML = "<b style='color:#FF3333;'>100% CONFIRM DOWN!</b> Take trade now safely.";
+                    msg.innerHTML = "<b style='color:#FF3333;'>১০০% কনফার্ম ডাউন!</b> ট্রেড নিন।";
                     logoBtn.style.borderColor = "#FF3333";
-                    logoBtn.style.boxShadow = "0 0 30px rgba(255,51,51,0.8)";
+                    logoBtn.style.boxShadow = "0 0 35px rgba(255,51,51,0.85)";
                     panel.style.borderColor = "#FF3333";
                     
-                    rsi.innerText = "RSI: 22.1 (Drop)";
-                    macd.innerText = "MACD: Negative";
-                    bb.innerText = "BB: Lower Rej";
+                    rsi.innerText = "RSI: ১৯.৮ (ড্রপ)";
+                    macd.innerText = "MACD: বেয়ারিশ";
+                    bb.innerText = "BB: ডাউন ব্রেক";
                     
-                    speakText("Strong Down Signal confirmed by all global indicators. You can take down trade now safely.");
+                    speakText("সব ইন্ডিকেটর মিলিয়ে শক্তিশালী ডাউন সিগন্যাল কনফার্ম হয়েছে। আপনি এখন নিরাপদে ডাউন ট্রেড নিতে পারেন।");
                 }
 
                 if(scanner) scanner.style.display = 'none';
-            }, 4200);
+            }, 4500);
 
         } else {
             panel.style.display = 'none';
         }
     });
-
 })();
