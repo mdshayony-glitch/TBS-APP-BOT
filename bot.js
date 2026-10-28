@@ -29,7 +29,7 @@
         ">
             <span style="width: 12px; height: 12px; background: #00FF66; border-radius: 50%; box-shadow: 0 0 12px #00FF66; animation: pulseGlow 1.2s infinite;"></span>
             <span style="color: #fff; letter-spacing: 1px; font-size: 13px;">TRADEX AI PRO</span>
-            <span id="tx-badge" style="font-size: 9px; background: rgba(0,255,102,0.25); color: #00FF66; padding: 2px 6px; border-radius: 4px;">PRO v5</span>
+            <span style="font-size: 9px; background: rgba(0,255,102,0.25); color: #00FF66; padding: 2px 6px; border-radius: 4px;">PRO v5</span>
         </div>
 
         <div id="tradex-panel" style="
