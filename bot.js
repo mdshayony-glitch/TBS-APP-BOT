@@ -1,5 +1,5 @@
 (function() {
-    const containerId = 'sitb-tradex-glitch-bot';
+    const containerId = 'sitb-tradex-ultimate-bot';
     let existing = document.getElementById(containerId);
     if (existing) {
         existing.style.display = (existing.style.display === 'none' ? 'block' : 'none');
@@ -12,7 +12,7 @@
         <div id="sitb-main-panel" style="
             position: fixed;
             top: 100px;
-            right: 30px;
+            left: 50px;
             z-index: 999999;
             background: linear-gradient(135deg, #091921, #0f2c39, #05131b);
             color: #00ffcc;
@@ -22,12 +22,13 @@
             font-family: sans-serif;
             box-shadow: 0 15px 40px rgba(0,0,0,0.85);
             user-select: none;
+            touch-action: none;
             overflow: hidden;
         ">
-            <!-- Header (Draggable) -->
+            <!-- Header (Super Smooth Draggable) -->
             <div id="sitb-drag-header" style="
                 background: rgba(0,255,204,0.15);
-                padding: 10px 14px;
+                padding: 12px 14px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -53,12 +54,12 @@
                 </div>
                 
                 <div id="sitb-live-asset" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(0,255,204,0.3); padding: 8px 12px; border-radius: 6px; font-size: 14px; color: #fff; font-weight: bold;">
-                    অটো ডিটেক্ট হচ্ছে...
+                    অটো ডিটেক্ট...
                 </div>
 
                 <div>
                     <div style="font-size: 10px; color: #aaa; margin-bottom: 4px;">ROUND NUMBER / TARGET</div>
-                    <input type="text" id="sitb-target-input" value="0.65005" style="
+                    <input type="text" id="sitb-target-input" value="0.61400" style="
                         width: 100%;
                         background: rgba(0,0,0,0.6);
                         border: 1px solid rgba(0,255,204,0.4);
@@ -115,7 +116,7 @@
                 </div>
 
                 <div style="text-align: center; font-size: 9px; color: #666; margin-top: 5px;">
-                    [ SITB GLITCH ENGINE v2.0 ]
+                    [ ULTIMATE SMOOTH GLITCH v3.0 ]
                 </div>
             </div>
         </div>
@@ -138,7 +139,7 @@
     updateAsset();
     const assetTimer = setInterval(updateAsset, 1000);
 
-    // --- Dragging Logic ---
+    // --- Super Smooth Dragging Logic (Mobile & PC Friendly) ---
     const header = document.getElementById('sitb-drag-header');
     const panel = document.getElementById('sitb-main-panel');
     let isDragging = false, startX, startY, initialX, initialY;
@@ -151,6 +152,7 @@
         initialX = rect.left;
         initialY = rect.top;
         header.setPointerCapture(e.pointerId);
+        header.style.cursor = 'grabbing';
     });
 
     header.addEventListener('pointermove', (e) => {
@@ -162,9 +164,13 @@
         panel.style.right = 'auto';
     });
 
-    header.addEventListener('pointerup', () => { isDragging = false; });
+    header.addEventListener('pointerup', (e) => {
+        isDragging = false;
+        header.style.cursor = 'grab';
+        try { header.releasePointerCapture(e.pointerId); } catch(err) {}
+    });
 
-    // --- Real Glitch Action (Target Price & Chart Override) ---
+    // --- Glitch Engine ---
     const startBtn = document.getElementById('sitb-start-btn');
     const stopBtn = document.getElementById('sitb-stop-btn');
     const targetInput = document.getElementById('sitb-target-input');
@@ -180,16 +186,23 @@
         statusText.innerText = "● GLITCH ACTIVE";
         statusText.style.color = "#00ff66";
 
-        // চার্টের ক্যান্ডেল বা প্রাইস ডিসপ্লে সরাসরি টার্গেট ভ্যালুতে ফোর্স করার গ্লিচ ইঞ্জিন
         glitchLoop = setInterval(() => {
-            const elements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value');
-            elements.forEach(el => {
+            const priceEls = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text');
+            priceEls.forEach(el => {
                 if(!el.dataset.orig) el.dataset.orig = el.innerText;
-                el.innerText = val;
+                if(el.tagName.toLowerCase() === 'text') {
+                    el.textContent = val;
+                } else {
+                    el.innerText = val;
+                }
             });
-        }, 50);
 
-        console.log("SITB Glitch Triggered to: " + val);
+            const chartSvg = document.querySelectorAll('svg path, canvas');
+            chartSvg.forEach(svg => {
+                svg.style.transform = "translateY(-50px)";
+                svg.style.transition = "transform 0.15s ease-in-out";
+            });
+        }, 25);
     });
 
     stopBtn.addEventListener('click', () => {
@@ -201,12 +214,20 @@
         statusText.innerText = "● STANDBY";
         statusText.style.color = "#00ffcc";
 
-        // আগের অবস্থায় ফিরিয়ে আনা
-        const elements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value');
-        elements.forEach(el => {
-            if(el.dataset.orig) el.innerText = el.dataset.orig;
+        const priceEls = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text');
+        priceEls.forEach(el => {
+            if(el.dataset.orig) {
+                if(el.tagName.toLowerCase() === 'text') {
+                    el.textContent = el.dataset.orig;
+                } else {
+                    el.innerText = el.dataset.orig;
+                }
+            }
         });
 
-        console.log("SITB Glitch Stopped.");
+        const chartSvg = document.querySelectorAll('svg path, canvas');
+        chartSvg.forEach(svg => {
+            svg.style.transform = "none";
+        });
     });
 })();
