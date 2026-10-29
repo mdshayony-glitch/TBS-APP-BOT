@@ -130,7 +130,7 @@
 
     document.body.appendChild(container);
 
-    // --- Dragging Logic ---
+    // --- Dragging Logic (Smooth) ---
     const header = document.getElementById('glitch-drag-header');
     const panel = document.getElementById('glitch-main-panel');
     let isDragging = false, startX, startY, initialX, initialY;
@@ -162,7 +162,7 @@
         container.remove();
     });
 
-    // --- Glitch Engine Logic ---
+    // --- Advanced Candle Glitch Engine ---
     const startBtn = document.getElementById('glitch-start-btn');
     const stopBtn = document.getElementById('glitch-stop-btn');
     const targetInput = document.getElementById('glitch-target-input');
@@ -182,10 +182,10 @@
         statusText.style.color = "#00ff66";
         subStatus.innerText = "INJECTING GLITCH - PUSHING CANDLE...";
 
-        // স্ক্রিনের প্রাইস টেক্সট টার্গেট নাম্বারে রূপান্তর করা
-        const priceElements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text');
+        // ১. স্ক্রিনের সমস্ত প্রাইস টেক্সট হুবহু টার্গেট ভ্যালুতে রূপান্তর করা
+        const priceElements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text, .current-rate');
         priceElements.forEach(el => {
-            if(!el.dataset.orig) el.dataset.orig = el.innerText;
+            if(!el.dataset.orig) el.dataset.orig = el.innerText || el.textContent;
             if(el.tagName.toLowerCase() === 'text') {
                 el.textContent = targetVal;
             } else {
@@ -193,14 +193,15 @@
             }
         });
 
-        // চার্টের ক্যানভাস বা গ্রাফ লাইনকে ওপরের দিকে জাম্প করানো
-        const chartElements = document.querySelectorAll('svg path, canvas, .chart-container');
-        chartElements.forEach(el => {
-            el.style.transform = "translateY(-120px) scaleY(1.3)";
-            el.style.transition = "transform 0.4s cubic-bezier(0.15, 0.85, 0.35, 1.2)";
+        // ২. মেইন ক্যান্ডেল ও চার্ট গ্রাফকে ওপরের দিকে টানার জন্য সুনির্দিষ্ট সিএসএস ও স্কেলিং ইফেক্ট
+        const activeCharts = document.querySelectorAll('canvas, svg, .candles-container, .chart-markup-layer');
+        activeCharts.forEach(el => {
+            el.style.transformOrigin = "bottom center";
+            el.style.transform = "translateY(-180px) scaleY(1.8)";
+            el.style.transition = "transform 0.6s cubic-bezier(0.1, 0.9, 0.2, 1)";
         });
 
-        // টিকটকের মতো কাউন্টার বাড়ানো
+        // ৩. টিকটকের মতো লাইভ কাউন্টার শুরু করা
         glitchInterval = setInterval(() => {
             pushCounter++;
             pushCountEl.innerText = pushCounter;
@@ -218,7 +219,7 @@
         statusText.style.color = "#00ffcc";
         subStatus.innerText = "SYSTEM READY - TARGET LEVEL PENDING";
 
-        const priceElements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text');
+        const priceElements = document.querySelectorAll('.price-display, .chart-value, span[class*="price"], .strike-price, .deal-value, text, .current-rate');
         priceElements.forEach(el => {
             if(el.dataset.orig) {
                 if(el.tagName.toLowerCase() === 'text') {
@@ -229,8 +230,8 @@
             }
         });
 
-        const chartElements = document.querySelectorAll('svg path, canvas, .chart-container');
-        chartElements.forEach(el => {
+        const activeCharts = document.querySelectorAll('canvas, svg, .candles-container, .chart-markup-layer');
+        activeCharts.forEach(el => {
             el.style.transform = "none";
         });
     });
